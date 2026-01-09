@@ -24,8 +24,100 @@
   #warning "FPU is not initialized, but the project is compiling for an FPU. Please initialize the FPU before use."
 #endif
 
+void delay(uint32_t count);
+
+
+	GPIO_Handle_t gpio,gpioBTN;
+
 int main(void)
 {
     /* Loop forever */
-	for(;;);
+//    GPIO_PeriClkControl(GPIOA, ENABLE); // Enable GPIOC peripheral clock
+//    GPIO_PeriClkControl(GPIOB, ENABLE); // Enable GPIOC peripheral clock
+    GPIO_PeriClkControl(GPIOC, ENABLE); // Enable GPIOC peripheral clock
+//    GPIO_PeriClkControl(GPIOD, ENABLE); // Enable GPIOC peripheral clock
+//    GPIO_PeriClkControl(GPIOE, ENABLE); // Enable GPIOC peripheral clock
+    GPIO_PeriClkControl(GPIOA, ENABLE); // Enable GPIOC peripheral clock
+
+
+//    /**
+//     * Push pull
+//     */
+    gpio.pGPIOx  = GPIOC;
+    gpio.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_9 ;
+    gpio.GPIO_PinConfig.GPIO_PinMode = GPIO_MODE_OUTPUT;
+    gpio.GPIO_PinConfig.GPIO_PinPuPdControl = GPIO_NO_PUPD;
+    gpio.GPIO_PinConfig.GPIO_PinSpeed = GPIO_LOW_SPEED;
+    gpio.GPIO_PinConfig.GPIO_PinOPType = GPIO_OUTPUT_TYPE_PP;//PUSH PULL
+    GPIO_Init(&gpio);
+//
+//
+//
+//    /**
+//     * Open Drain OPtype usually need a external pull ups resistor, because the its only produced Gnd output
+//     */
+//     gpio.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_9 ;
+//     gpio.GPIO_PinConfig.GPIO_PinMode = GPIO_MODE_OUTPUT;
+//     gpio.GPIO_PinConfig.GPIO_PinPuPdControl = GPIO_NO_PUPD;
+//     gpio.GPIO_PinConfig.GPIO_PinSpeed = GPIO_LOW_SPEED;
+//     gpio.GPIO_PinConfig.GPIO_PinOPType = GPIO_OUTPUT_TYPE_OD;//PUSH PULL
+//     GPIO_Init(&gpio);
+
+
+//
+//    gpioBTN.pGPIOx  = GPIOA;
+//    gpioBTN.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_0 ;
+//    gpioBTN.GPIO_PinConfig.GPIO_PinMode = GPIO_MODE_IN;
+//    gpioBTN.GPIO_PinConfig.GPIO_PinPuPdControl = GPIO_PIN_PD;
+////  gpio.GPIO_PinConfig.GPIO_PinSpeed = GPIO_HIGH_SPEED;
+////  gpio.GPIO_PinConfig.GPIO_PinOPType = GPIO_OUTPUT_TYPE_OD;//PUSH PULL
+//     GPIO_Init(&gpioBTN);
+
+
+        gpioBTN.pGPIOx  = GPIOA;
+        gpioBTN.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_1;
+        gpioBTN.GPIO_PinConfig.GPIO_PinMode = GPIO_MODE_IN;
+        gpioBTN.GPIO_PinConfig.GPIO_PinPuPdControl = GPIO_NO_PUPD;
+        gpio.GPIO_PinConfig.GPIO_PinSpeed = GPIO_HIGH_SPEED;
+
+         GPIO_Init(&gpioBTN);
+
+
+
+
+    while(1){
+//      GPIO_ToggleOutputPin(GPIOC ,GPIO_PIN_NO_8); //Toggle GPIOC pin 8
+//      GPIO_ToggleOutputPin(GPIOC ,GPIO_PIN_NO_9); //Toggle GPIOC pin 9
+//      delay(100000); //Short Delay
+//
+//    	if(GPIO_InputReadPin(GPIOA,GPIO_PIN_NO_0 == 1)){
+//    		 delay(200000); //Short Delay
+//    		 GPIO_WriteOutputPin(GPIOC, GPIO_PIN_NO_8, 1);
+//    	}else{
+//    		 GPIO_WriteOutputPin(GPIOC, GPIO_PIN_NO_8, 0); //Toggle GPIOC pin 8
+//
+//    	}
+
+
+    	if(GPIO_InputReadPin(GPIOA,GPIO_PIN_NO_1 == 1)){
+    		 GPIO_ToggleOutputPin(GPIOC ,GPIO_PIN_NO_9); //Toggle GPIOC pin 9
+    		 delay(200000); //Short Delay
+    	}
+
+
+
+
+
+    }
+
 }
+
+
+void delay(uint32_t count)
+{
+    while (count--)
+    {
+        __asm volatile ("nop");
+    }
+}
+

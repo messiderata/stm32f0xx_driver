@@ -95,8 +95,8 @@
     Please refer the reference manual of the specific MCU you are using.
 */
 typedef struct{
-    __vo uint32_t OTYPER;                                       /*GPIO port output type register                        Address offset: 0x04        */
     __vo uint32_t MODER;                                        /*GPIO port mode register                               Address offset: 0x00        */
+    __vo uint32_t OTYPER;                                       /*GPIO port output type register                        Address offset: 0x04        */
     __vo uint32_t OSPEEDR;                                      /*GPIO port output speed register                       Address offset: 0x08        */
     __vo uint32_t PUPDR;                                        /*GPIO port pull-up/pull-down register                  Address offset: 0x0C        */
     __vo uint32_t IDR;                                          /*GPIO port input data register                         Address offset: 0x10        */
@@ -107,6 +107,31 @@ typedef struct{
     __vo uint32_t BRR;                                          /*GPIO port bit reset register                          Address offset: 0x28        */  
 }GPIO_RegDef_t;
 
+
+/*
+    Note: Register of a peripheral are specific to MCU
+    So, for different MCUs, the register structures for different peripherals may vary.
+    Please refer the reference manual of the specific MCU you are using.
+*/
+typedef struct{
+
+    __vo uint32_t  IMR;     /*Interrupt mask register                               Address offset: 0x00*/   
+    __vo uint32_t  EMR;     /*Event mask register                                   Address offset: 0x04*/
+    __vo uint32_t  RTSR;    /*Rising trigger selection register                     Address offset: 0x08*/
+    __vo uint32_t  FTSR;    /*Falling trigger selection register                    Address offset: 0x0C*/
+    __vo uint32_t  SWIER;   /*Software interrupt event register                     Address offset: 0x10*/
+    __vo uint32_t  PR;      /*Pending register                                      Addres offset : 0x14*/
+}EXTI_RegDef_t;
+
+
+
+typedef struct 
+{
+    /* data */
+    __vo uint32_t SYSCFG_CFGR1[2];
+    __vo uint32_t SYSCFG_EXTICR[4];
+
+}SYSCFG_RegDef_t;
 
 
 /********************************Peripheral Clock register definition structures**************************************************************** */
@@ -148,8 +173,8 @@ typedef struct{
 
 
 #define RCC                             ((RCC_RegDef_t*)RCC_BASEADDR)
-
-
+#define EXTI                            ((EXTI_RegDef_t*)EXTI_BASE_ADDR)
+#define SYSCFG                           ((SYSCFG_RegDef_t *))
 /*
     Clock enable marcos for GPIOX peripherals
 */
@@ -260,23 +285,7 @@ disable*/
 
 
 
-
-
-
-
-/**
- * @brief Register addresses of SPI1
- * 
- */
-// #define SPI1_CR1                          (SPI1_I2S1_BASE_ADDR + 0x00)
-// #define SPI1_CR2                          (SPI1_I2S1_BASE_ADDR + 0x04)
-// #define SPI1_CSR                          (SPI1_I2S1_BASE_ADDR + 0x08)
-// #define SPI1_DR                           (SPI1_I2S1_BASE_ADDR + 0x0C)
-// #define SPI1_CRCPR                        (SPI1_I2S1_BASE_ADDR + 0x10)
-// #define SPI1_RXCRCR                       (SPI1_I2S1_BASE_ADDR + 0x14)
-// #define SPI1_TXCRCR                       (SPI1_I2S1_BASE_ADDR + 0x18)
-// #define SPI1_I2SCFGR                      (SPI1_I2S1_BASE_ADDR + 0x1C)
-// #define SPI1_I2SPR                        (SPI1_I2S1_BASE_ADDR + 0x20)
-
+#include "stm32f051xx_gpio.h"
+    
     
 #endif /* INC_STM32F0XX_H_ */
